@@ -2,8 +2,8 @@
 
 let pi = 3.14159
 
-let areaOfCircle r = pi * r * r
-let volumeOfCylinder r h = areaOfCircle r * h
+let areaOfCircle = fun r -> pi * r * r
+let volumeOfCylinder = fun r -> fun h -> (areaOfCircle r) * h
 
 [<EntryPoint>]
 let main argv =
@@ -16,7 +16,10 @@ let main argv =
     printfn "Введите высоту цилиндра:"
     let h = readFloat()
 
-    r |> areaOfCircle |> printfn "Площадь круга: %.2f"
-    r |> (fun r -> volumeOfCylinder r h) |> printfn "Объем цилиндра: %.2f"
+    let area = areaOfCircle r
+    let volume = (volumeOfCylinder r) h
+
+    printfn "Площадь круга: %.2f" area
+    printfn "Объем цилиндра: %.2f" volume
 
     0
