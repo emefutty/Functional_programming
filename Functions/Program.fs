@@ -1,25 +1,19 @@
-﻿open System
+﻿let rec sumOfDigitsTailRec n acc =
+    if n = 0 then acc
+    else sumOfDigitsTailRec (n / 10) (acc + (n % 10))
 
-let pi = 3.14159
+let sumOfDigits n = sumOfDigitsTailRec n 0
 
-let areaOfCircle = fun r -> pi * r * r
-let volumeOfCylinder = fun r -> fun h -> (areaOfCircle r) * h
+open System
 
 [<EntryPoint>]
 let main argv =
 
-    let readFloat = Console.ReadLine >> float
+    printfn "Введите целое число:"
+    let number = Console.ReadLine() |> int
 
-    printfn "Введите радиус круга:"
-    let r = readFloat()
+    let result = sumOfDigits number
 
-    printfn "Введите высоту цилиндра:"
-    let h = readFloat()
-
-    let area = areaOfCircle r
-    let volume = (volumeOfCylinder r) h
-
-    printfn "Площадь круга: %.2f" area
-    printfn "Объем цилиндра: %.2f" volume
+    printfn "Сумма цифр числа: %d" result
 
     0
