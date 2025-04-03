@@ -47,6 +47,16 @@ let main9 digit funct init cond =
 
     step digit init
 
+let favoriteLangReply lang =
+    match lang with
+    | "f#" | "fsharp" | "f sharp" | "prolog" -> "Хм, понятно... подлизываешься :)"
+    | "python" -> "Ну кто бы сомневался."
+    | "c++" -> "Интересный выбор."
+    | "java" -> "Хороший выбор, одобряю."
+    | "ruby" -> "Кажется ты перепутал дисциплины."
+    | _ -> "Интересный выбор! Главное, чтобы тебе нравилось."
+
+
 [<EntryPoint>]
 let main argv =
 
@@ -65,7 +75,7 @@ let main argv =
     Console.WriteLine($"chooseFunction true для {number}: {f1 number}")
     Console.WriteLine($"chooseFunction false для {number}: {f2 number}")*)
 
-    printfn "Тестирование обхода числа:"
+    (*printfn "Тестирование обхода числа:"
     Console.WriteLine($"Сумма цифр: {main7 number (fun x y -> x + y) 0}")
     Console.WriteLine($"Произведение цифр: {main7 number (fun x y -> x * y) 1}")
     Console.WriteLine($"Максимум цифр: {main7 number (fun x y -> match x > y with | true -> x | false -> y) 0}")
@@ -75,5 +85,11 @@ let main argv =
     Console.WriteLine($"Количество чётных цифр: {main9 number (fun x y -> x + 1) 0 (fun d -> d % 2 = 0)}")
     Console.WriteLine($"Сумма чётных цифр: {main9 number (fun x y -> x + y) 0 (fun d -> d % 2 = 0)}")
     Console.WriteLine($"Произведение нечётных цифр: {main9 number (fun x y -> x * y) 1 (fun d -> d % 2 = 1)}")
+*)
+    printfn "\nЛюбимый язык программирования"
+    printf "Какой у тебя любимый язык программирования? "
+    let userLang = Console.ReadLine()
+    let reply = favoriteLangReply userLang
+    Console.WriteLine(reply)
 
     0
