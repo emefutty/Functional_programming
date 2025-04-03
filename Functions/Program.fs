@@ -7,18 +7,23 @@ let digitFold cond op init n =
         | 0 -> acc
         | _ ->
             let d = x % 10
-            let acc' = if cond d then op acc d else acc
+            let acc' = 
+                match cond d with
+                | true -> op acc d
+                | false -> acc
             loop (x / 10) acc'
     loop n init
 
 let rec digitalSum num : int =
-     if num = 0 then 0
-     else (num % 10) + (digitalSum (num / 10))
+     match num with
+     | 0 -> 0
+     | _ -> (num % 10) + (digitalSum (num / 10))
 
 let tailDigitalSum num : int =
      let rec digitalSubSum num currentSum = 
-         if num = 0 then currentSum
-         else
+          match num with
+          | 0 -> currentSum
+          | _ ->
              let currentNum = num / 10
              let digital = num % 10
              let accumulator = currentSum + digital
@@ -105,9 +110,9 @@ let maxCoprimeDivisor n =
         match i with
         | 0 -> currentDiv
         | _ when n % i = 0 ->
-            let count = countCoprimeDigits i
-            if count > currentMax then loop (i - 1) count i
-            else loop (i - 1) currentMax currentDiv
+            match countCoprimeDigits i > currentMax with
+            | true -> loop (i - 1) (countCoprimeDigits i) i
+            | false -> loop (i - 1) currentMax currentDiv
         | _ -> loop (i - 1) currentMax currentDiv
 
     loop n 0 1
