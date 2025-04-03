@@ -192,10 +192,12 @@ let main argv =
     let funcNumber = int input[0]
     let arg = int input[1]
 
-    let apply = fun f -> fun x -> f x
+    (*let apply = fun f -> fun x -> f x
 
     let selectedFunc = chooseMethod funcNumber
-    let result = apply selectedFunc arg
+    let result = apply selectedFunc arg*)
+
+    let result = (chooseMethod >> (fun f -> f arg)) funcNumber
 
     printfn $"Результат: {result}"
 
