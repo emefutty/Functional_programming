@@ -91,6 +91,21 @@ let countCoprimeWith n =
         | _ -> loop (i - 1) (if gcd n i = 1 then acc + 1 else acc)
     loop (n - 1) 0
 
+//сумма цифр, делящихся на 3
+let sumDigitsDivBy3 n =
+    let cond = fun d -> d % 3 = 0        
+    let op = fun acc d -> acc + d        
+
+    let rec loop num acc =
+        match num with
+        | 0 -> acc
+        | _ ->
+            let digit = num % 10
+            let newAcc = if cond digit then op acc digit else acc
+            loop (num / 10) newAcc
+
+    loop n 0
+
 [<EntryPoint>]
 let main argv =
 
@@ -154,6 +169,7 @@ let main argv =
     let test2 = main15 15 (fun acc x -> acc * x) 1 (fun x -> x % 2 = 1)
     printfn $"Произведение нечётных взаимно простых с 15: {test2}"*)
 
-    printfn $"countCoprimeWith(10) = {countCoprimeWith 10}"
+    (*printfn $"countCoprimeWith(10) = {countCoprimeWith 10}"*)
+    printfn $"sumDigitsDivBy3(123456) = {sumDigitsDivBy3 123456}"
 
     0
