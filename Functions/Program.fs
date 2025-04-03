@@ -69,6 +69,14 @@ let main13 n f init =
         | _ -> loop (i - 1) acc
     loop (n - 1) init
 
+//Функция Эйлера
+let eulerPhi n =
+    match n with
+    | 1 -> 1
+    | _ -> main13 n (fun acc _ -> acc + 1) 0
+
+
+
 [<EntryPoint>]
 let main argv =
 
@@ -113,7 +121,15 @@ let main argv =
     printReply lang
 *)
 
-    let sum13 = main13 number (fun acc x -> acc + x) 0
-    printfn $"Сумма: {sum13}"
+    printfn "Тест функции Эйлера"
+
+    // φ(10) = 4 (взаимно простые: 1, 3, 7, 9)
+    printfn $"phi(10) = {eulerPhi 10}"
+
+    // φ(13) = 12 (простое число, значит φ(n) = n - 1)
+    printfn $"phi(13) = {eulerPhi 13}"
+
+    // φ(1) = 1 по определению
+    printfn $"phi(1) = {eulerPhi 1}"
 
     0
