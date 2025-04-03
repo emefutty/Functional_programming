@@ -1,10 +1,9 @@
-﻿let rec sumOfDigitsTailRec n acc =
-    if n = 0 then acc
-    else sumOfDigitsTailRec (n / 10) (acc + (n % 10))
+﻿open System
 
-let sumOfDigits n = sumOfDigitsTailRec n 0
+let rec digitalSum num : int =
+     if num = 0 then 0
+     else (num % 10) + (digitalSum (num / 10))
 
-open System
 
 [<EntryPoint>]
 let main argv =
@@ -12,8 +11,7 @@ let main argv =
     printfn "Введите целое число:"
     let number = Console.ReadLine() |> int
 
-    let result = sumOfDigits number
-
-    printfn "Сумма цифр числа: %d" result
+    let uprec = digitalSum number
+    Console.WriteLine($"Рекурсия вверх: {uprec}")
 
     0
