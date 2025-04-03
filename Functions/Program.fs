@@ -75,14 +75,22 @@ let eulerPhi n =
     | 1 -> 1
     | _ -> main13 n (fun acc _ -> acc + 1) 0
 
+let main15 n f init cond =
+    let rec loop i acc =
+        match i with
+        | 0 -> acc
+        | _ when gcd i n = 1 && cond i -> loop (i - 1) (f acc i)
+        | _ -> loop (i - 1) acc
+    loop (n - 1) init
+
 
 
 [<EntryPoint>]
 let main argv =
 
-    printfn "Введите целое число:"
+    (*printfn "Введите целое число:"
     let number = Console.ReadLine() |> int
-
+*)
     (*let uprec = digitalSum number
     Console.WriteLine($"Рекурсия вверх: {uprec}")
 
@@ -121,7 +129,7 @@ let main argv =
     printReply lang
 *)
 
-    printfn "Тест функции Эйлера"
+    (*printfn "Тест функции Эйлера"
 
     // φ(10) = 4 (взаимно простые: 1, 3, 7, 9)
     printfn $"phi(10) = {eulerPhi 10}"
@@ -130,6 +138,14 @@ let main argv =
     printfn $"phi(13) = {eulerPhi 13}"
 
     // φ(1) = 1 по определению
-    printfn $"phi(1) = {eulerPhi 1}"
+    printfn $"phi(1) = {eulerPhi 1}"*)
+
+    printfn "\nОбход взаимно простых с условием"
+
+    let test1 = main15 20 (fun acc x -> acc + x) 0 (fun x -> x % 2 = 0)
+    printfn $"Сумма чётных взаимно простых с 20: {test1}"
+
+    let test2 = main15 15 (fun acc x -> acc * x) 1 (fun x -> x % 2 = 1)
+    printfn $"Произведение нечётных взаимно простых с 15: {test2}"
 
     0
