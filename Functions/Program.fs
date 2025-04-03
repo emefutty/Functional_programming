@@ -1,5 +1,16 @@
 ﻿open System
 
+// Универсальный обход цифр числа
+let digitFold cond op init n =
+    let rec loop x acc =
+        match x with
+        | 0 -> acc
+        | _ ->
+            let d = x % 10
+            let acc' = if cond d then op acc d else acc
+            loop (x / 10) acc'
+    loop n init
+
 let rec digitalSum num : int =
      if num = 0 then 0
      else (num % 10) + (digitalSum (num / 10))
@@ -25,27 +36,10 @@ let chooseFunction flag =
     | false -> factorial
 
 let main7 digit funct init =
-    let rec step digit rez =
-        let next_rez = funct rez (digit % 10)
-        let next_digit = digit / 10
-        match next_digit with
-        | n when n > 0 -> step n next_rez
-        | _ -> next_rez
-    step digit init
+    digitFold (fun _ -> true) funct init digit
 
 let main9 digit funct init cond =
-    let rec step digit rez =
-        let current = digit % 10
-        let rez' =
-            match cond current with
-            | true -> funct rez current
-            | false -> rez
-
-        match digit / 10 with
-        | 0 -> rez'
-        | next -> step (digit / 10) rez'
-
-    step digit init
+    digitFold cond funct init digit
 
 let favoriteLangReply lang =
     match lang with
@@ -84,27 +78,11 @@ let main15 n f init cond =
     loop (n - 1) init
 
 //количество чисел, взаимно простых с заданным
-let countCoprimeWith n =
-    let rec loop i acc =
-        match i with
-        | 0 -> acc
-        | _ -> loop (i - 1) (if gcd n i = 1 then acc + 1 else acc)
-    loop (n - 1) 0
+let countCoprimeWith n = eulerPhi n
 
 //сумма цифр, делящихся на 3
 let sumDigitsDivBy3 n =
-    let cond = fun d -> d % 3 = 0        
-    let op = fun acc d -> acc + d        
-
-    let rec loop num acc =
-        match num with
-        | 0 -> acc
-        | _ ->
-            let digit = num % 10
-            let newAcc = if cond digit then op acc digit else acc
-            loop (num / 10) newAcc
-
-    loop n 0
+    digitFold (fun d -> d % 3 = 0) (+) 0 n
 
 //делитель, взаимно простой с наибольшим числом цифр
 let maxCoprimeDivisor n =
@@ -133,6 +111,13 @@ let maxCoprimeDivisor n =
         | _ -> loop (i - 1) currentMax currentDiv
 
     loop n 0 1
+
+let chooseMethod n =
+    match n with
+    | 1 -> countCoprimeWith
+    | 2 -> sumDigitsDivBy3
+    | 3 -> maxCoprimeDivisor
+    | _ -> fun _ -> failwith "Неверный номер функции (должен быть 1–3)"
 
 
 [<EntryPoint>]
@@ -200,6 +185,18 @@ let main argv =
 
     (*printfn $"countCoprimeWith(10) = {countCoprimeWith 10}"*)
     (*printfn $"sumDigitsDivBy3(123456) = {sumDigitsDivBy3 123456}"*)
-    printfn $"maxCoprimeDivisor(231) = {maxCoprimeDivisor 231}"
+    (*printfn $"maxCoprimeDivisor(231) = {maxCoprimeDivisor 231}"*)
+
+    printfn "Введите номер функции и аргумент, например: 2 231"
+    let input = Console.ReadLine().Split()
+    let funcNumber = int input[0]
+    let arg = int input[1]
+
+    let apply = fun f -> fun x -> f x
+
+    let selectedFunc = chooseMethod funcNumber
+    let result = apply selectedFunc arg
+
+    printfn $"Результат: {result}"
 
     0
