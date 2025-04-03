@@ -83,7 +83,13 @@ let main15 n f init cond =
         | _ -> loop (i - 1) acc
     loop (n - 1) init
 
-
+//количество чисел, взаимно простых с заданным
+let countCoprimeWith n =
+    let rec loop i acc =
+        match i with
+        | 0 -> acc
+        | _ -> loop (i - 1) (if gcd n i = 1 then acc + 1 else acc)
+    loop (n - 1) 0
 
 [<EntryPoint>]
 let main argv =
@@ -140,12 +146,14 @@ let main argv =
     // φ(1) = 1 по определению
     printfn $"phi(1) = {eulerPhi 1}"*)
 
-    printfn "\nОбход взаимно простых с условием"
+    (*printfn "\nОбход взаимно простых с условием"
 
     let test1 = main15 20 (fun acc x -> acc + x) 0 (fun x -> x % 2 = 0)
     printfn $"Сумма чётных взаимно простых с 20: {test1}"
 
     let test2 = main15 15 (fun acc x -> acc * x) 1 (fun x -> x % 2 = 1)
-    printfn $"Произведение нечётных взаимно простых с 15: {test2}"
+    printfn $"Произведение нечётных взаимно простых с 15: {test2}"*)
+
+    printfn $"countCoprimeWith(10) = {countCoprimeWith 10}"
 
     0
