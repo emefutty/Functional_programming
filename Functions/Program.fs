@@ -106,6 +106,35 @@ let sumDigitsDivBy3 n =
 
     loop n 0
 
+//делитель, взаимно простой с наибольшим числом цифр
+let maxCoprimeDivisor n =
+    let digits =
+        let rec extractDigits x acc =
+            match x with
+            | 0 when acc = [] -> [0]  
+            | 0 -> acc
+            | _ -> extractDigits (x / 10) ((x % 10) :: acc)
+        extractDigits n []
+
+    // Функция для подсчёта количества взаимно простых цифр с числом d
+    let countCoprimeDigits d =
+        digits
+        |> List.filter (fun digit -> gcd d digit = 1)
+        |> List.length
+
+    // Перебор всех делителей числа n
+    let rec loop i currentMax currentDiv =
+        match i with
+        | 0 -> currentDiv
+        | _ when n % i = 0 ->
+            let count = countCoprimeDigits i
+            if count > currentMax then loop (i - 1) count i
+            else loop (i - 1) currentMax currentDiv
+        | _ -> loop (i - 1) currentMax currentDiv
+
+    loop n 0 1
+
+
 [<EntryPoint>]
 let main argv =
 
@@ -170,6 +199,7 @@ let main argv =
     printfn $"Произведение нечётных взаимно простых с 15: {test2}"*)
 
     (*printfn $"countCoprimeWith(10) = {countCoprimeWith 10}"*)
-    printfn $"sumDigitsDivBy3(123456) = {sumDigitsDivBy3 123456}"
+    (*printfn $"sumDigitsDivBy3(123456) = {sumDigitsDivBy3 123456}"*)
+    printfn $"maxCoprimeDivisor(231) = {maxCoprimeDivisor 231}"
 
     0
