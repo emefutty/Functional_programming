@@ -56,12 +56,24 @@ let favoriteLangReply lang =
     | "ruby" -> "Кажется ты перепутал дисциплины."
     | _ -> "Интересный выбор! Главное, чтобы тебе нравилось."
 
+let rec gcd a b =
+    match b with
+    | 0 -> abs a
+    | _ -> gcd b (a % b)
+
+let main13 n f init =
+    let rec loop i acc =
+        match i with
+        | 0 -> acc
+        | _ when gcd i n = 1 -> loop (i - 1) (f acc i)
+        | _ -> loop (i - 1) acc
+    loop (n - 1) init
 
 [<EntryPoint>]
 let main argv =
 
-   (* printfn "Введите целое число:"
-    let number = Console.ReadLine() |> int*)
+    printfn "Введите целое число:"
+    let number = Console.ReadLine() |> int
 
     (*let uprec = digitalSum number
     Console.WriteLine($"Рекурсия вверх: {uprec}")
@@ -86,7 +98,7 @@ let main argv =
     Console.WriteLine($"Сумма чётных цифр: {main9 number (fun x y -> x + y) 0 (fun d -> d % 2 = 0)}")
     Console.WriteLine($"Произведение нечётных цифр: {main9 number (fun x y -> x * y) 1 (fun d -> d % 2 = 1)}")
 *)
-    printfn "\nЛюбимый язык программирования"
+    (*printfn "\nЛюбимый язык программирования"
     printf "Какой у тебя любимый язык программирования? "
 
     //Суперпозиция
@@ -99,5 +111,9 @@ let main argv =
 
     let lang = Console.ReadLine()
     printReply lang
+*)
+
+    let sum13 = main13 number (fun acc x -> acc + x) 0
+    printfn $"Сумма: {sum13}"
 
     0
