@@ -14,6 +14,16 @@ let tailDigitalSum num : int =
              digitalSubSum currentNum accumulator
      digitalSubSum num 0
 
+let rec factorial n =
+    match n with
+    | 0 -> 1
+    | _ -> n * factorial (n - 1)
+
+let chooseFunction flag =
+    match flag with
+    | true -> tailDigitalSum
+    | false -> factorial
+
 [<EntryPoint>]
 let main argv =
 
@@ -25,5 +35,11 @@ let main argv =
 
     let tailrec = tailDigitalSum number
     Console.WriteLine($"Рекурсия вниз: {tailrec}")
+
+    let f1 = chooseFunction true
+    let f2 = chooseFunction false
+
+    Console.WriteLine($"chooseFunction true для {number}: {f1 number}")
+    Console.WriteLine($"chooseFunction false для {number}: {f2 number}")
 
     0
