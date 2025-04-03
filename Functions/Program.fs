@@ -49,7 +49,7 @@ let main9 digit funct init cond =
 
 let favoriteLangReply lang =
     match lang with
-    | "f#" | "fsharp" | "f sharp" | "prolog" -> "Хм, понятно... подлизываешься :)"
+    | "f#" | "prolog" -> "Хм, понятно... подлизываешься :)"
     | "python" -> "Ну кто бы сомневался."
     | "c++" -> "Интересный выбор."
     | "java" -> "Хороший выбор, одобряю."
@@ -60,8 +60,8 @@ let favoriteLangReply lang =
 [<EntryPoint>]
 let main argv =
 
-    printfn "Введите целое число:"
-    let number = Console.ReadLine() |> int
+   (* printfn "Введите целое число:"
+    let number = Console.ReadLine() |> int*)
 
     (*let uprec = digitalSum number
     Console.WriteLine($"Рекурсия вверх: {uprec}")
@@ -88,8 +88,16 @@ let main argv =
 *)
     printfn "\nЛюбимый язык программирования"
     printf "Какой у тебя любимый язык программирования? "
-    let userLang = Console.ReadLine()
-    let reply = favoriteLangReply userLang
-    Console.WriteLine(reply)
+
+    //Суперпозиция
+    let userLang = Console.ReadLine >> favoriteLangReply >> Console.WriteLine
+    userLang()
+
+    //Каррирование
+    let printReply =
+        fun input -> Console.WriteLine(favoriteLangReply input)
+
+    let lang = Console.ReadLine()
+    printReply lang
 
     0
