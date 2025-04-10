@@ -219,9 +219,14 @@ let main argv =
     Console.WriteLine("Metod 1: {0}", reverseBetweenMinMaxList list)
     Console.WriteLine("Metod 2: {0}", reverseBetweenMinMaxChurch list)*)
 
-    Console.WriteLine("количество минимальных элементов в интервале")
+    (*Console.WriteLine("количество минимальных элементов в интервале")
     let list = [1; -2; -2; 3; 4; 16; 64]
     Console.WriteLine("Metod 1: {0}", countMinInRangeList list 1 5)
-    Console.WriteLine("Metod 2: {0}", countMinInRangeChurch list 1 5)
+    Console.WriteLine("Metod 2: {0}", countMinInRangeChurch list 1 5)*)
+
+    Console.WriteLine("Количество локальных максимумов")
+    let list = [1; 3; 2; 5; 4]
+    Console.WriteLine("List: {0}", countLocalMaxList list)
+    Console.WriteLine("Church: {0}", countLocalMaxChurch list)
 
     0

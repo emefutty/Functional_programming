@@ -86,3 +86,21 @@ let countMinInRangeChurch lst a b =
             else countMin cnt tail
      
     countMin 0 sublist
+
+    // 1.32.1
+let countLocalMaxList list =
+    list
+    |> List.windowed 3
+    |> List.filter (function 
+        | [a; b; c] -> b > a && b > c
+        | _ -> false)
+    |> List.length
+ 
+ // 1.32.2
+let countLocalMaxChurch list =
+    let rec count acc list = 
+        match list with
+        | a::b::c::tail when b > a && b > c -> count (acc + 1) (b::c::tail)
+        | _::tail -> count acc tail
+        | _ -> acc
+    count 0 list
