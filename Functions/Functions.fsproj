@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+	<Compile Include="F#_lists.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
 ﻿open System
+open ListTasks
 
 // Универсальный обход цифр числа
 let digitFold cond op init n =
@@ -192,18 +193,25 @@ let main argv =
     (*printfn $"sumDigitsDivBy3(123456) = {sumDigitsDivBy3 123456}"*)
     (*printfn $"maxCoprimeDivisor(231) = {maxCoprimeDivisor 231}"*)
 
-    printfn "Введите номер функции и аргумент, например: 2 231"
+    (*printfn "Введите номер функции и аргумент, например: 2 231"
     let input = Console.ReadLine().Split()
     let funcNumber = int input[0]
-    let arg = int input[1]
+    let arg = int input[1]*)
 
     (*let apply = fun f -> fun x -> f x
 
     let selectedFunc = chooseMethod funcNumber
     let result = apply selectedFunc arg*)
 
-    let result = (chooseMethod >> (fun f -> f arg)) funcNumber
+   (* let result = (chooseMethod >> (fun f -> f arg)) funcNumber
 
-    printfn $"Результат: {result}"
+    printfn $"Результат: {result}"*)
+
+    Console.WriteLine("Индекс минимального элемента")
+    let list = [1; 2; 8; -64; 4; 16; 9]
+    let minList = findMinIndexList list
+    let minChurch = findMinIndexChurch list
+    Console.WriteLine("Metod 1: {0}", minList)
+    Console.WriteLine("Metod 2: {0}", minChurch)
 
     0
