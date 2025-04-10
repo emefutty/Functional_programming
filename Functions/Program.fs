@@ -207,11 +207,21 @@ let main argv =
 
     printfn $"Результат: {result}"*)
 
-    Console.WriteLine("Индекс минимального элемента")
+   (* Console.WriteLine("Индекс минимального элемента")
     let list = [1; 2; 8; -64; 4; 16; 9]
     let minList = findMinIndexList list
     let minChurch = findMinIndexChurch list
     Console.WriteLine("Metod 1: {0}", minList)
-    Console.WriteLine("Metod 2: {0}", minChurch)
+    Console.WriteLine("Metod 2: {0}", minChurch)*)
+
+    (*Console.WriteLine("Reverse между максимальным и минимальным элементом")
+    let list = [1; -2; 8; 3; 4; 16; 64]
+    Console.WriteLine("Metod 1: {0}", reverseBetweenMinMaxList list)
+    Console.WriteLine("Metod 2: {0}", reverseBetweenMinMaxChurch list)*)
+
+    Console.WriteLine("количество минимальных элементов в интервале")
+    let list = [1; -2; -2; 3; 4; 16; 64]
+    Console.WriteLine("Metod 1: {0}", countMinInRangeList list 1 5)
+    Console.WriteLine("Metod 2: {0}", countMinInRangeChurch list 1 5)
 
     0

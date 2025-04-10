@@ -48,3 +48,41 @@ let reverseBetweenMinMaxChurch list =
      
     processList 0 list []
 
+// 1.22.1
+let countMinInRangeList list a b =
+    let sublist = list |> List.skip a |> List.take (b - a + 1)
+    let minVal = List.min sublist
+    sublist |> List.filter (fun x -> x = minVal) |> List.length
+ 
+ // 1.22.2
+let countMinInRangeChurch lst a b =
+    let rec takeRange start stop acc list = 
+        match list with
+        | [] -> acc
+        | head::tail ->
+            if start > stop then acc
+            elif start > 0 then takeRange (start - 1) (stop - 1) acc tail
+            else takeRange start (stop - 1) (head :: acc) tail
+     
+    let sublist = takeRange a b [] lst |> List.rev
+
+    let rec findMin list minVal =
+        match list with
+        | [] -> minVal
+        | h::t ->
+            if h < minVal then findMin t h
+            else findMin t minVal
+
+    let minVal =
+        match sublist with
+        | [] -> failwith "—писок пуст Ч нечего сравнивать"
+        | h::t -> findMin t h
+  
+    let rec countMin cnt list = 
+        match list with
+        | [] -> cnt
+        | head::tail ->
+            if head = minVal then countMin (cnt + 1) tail
+            else countMin cnt tail
+     
+    countMin 0 sublist
