@@ -14,3 +14,11 @@ brothers(X):- brother(Y,X), write(Y), nl, fail.
 
 b_s(X,Y):- parent(Z,X), parent(Z,Y), X\=Y.
 b_s(X):- b_s(X,Y), write(Y), nl, fail.
+
+
+%Задание 2
+father(X,Y) :- man(X), parent(X, Y).
+father(X) :- father(Y, X), write(Y), nl, fail.
+
+wife(X,Y) :- parent(X,Z), parent(Y,Z), woman(X), man(Y).
+wife(X) :- wife(Y, X), write(Y), nl, fail.
