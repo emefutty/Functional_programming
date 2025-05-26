@@ -104,3 +104,132 @@ let countLocalMaxChurch list =
         | _::tail -> count acc tail
         | _ -> acc
     count 0 list
+
+// 1.42.1
+let belowAverageList list =
+    let avg = List.averageBy float list
+    list |> List.filter (fun x -> float x < avg)
+ 
+ // 1.42.2
+let belowAverageChurch list =
+    let average list =
+        let rec calculate sum count = function
+            | [] -> 
+                if count = 0 then 0.0
+                else float sum / float count
+            | head::tail -> calculate (sum + head) (count + 1) tail
+        calculate 0 0 list
+ 
+    let avg = average list
+    let rec filterBelow acc list = 
+        match list with
+        | [] -> acc
+        | head::tail ->
+            if float head < avg then
+                filterBelow (head::acc) tail
+            else
+                filterBelow acc tail
+    filterBelow [] list |> List.rev
+
+// 1.52.1
+let primeFactorsList n =
+    let rec factorize n p acc =
+        match n with
+        | 1 -> acc
+        | _ when n % p = 0 -> factorize (n/p) p (p::acc)
+        | _ -> factorize n (p + 1) acc
+    match n with
+    | x when x < 2 -> []
+    | _ -> factorize n 2 [] |> List.rev
+ 
+ // 1.52.2
+let primeFactorsChurch n =
+    let rec reverseList acc = function
+        | [] -> acc
+        | head::tail -> reverseList (head::acc) tail
+ 
+    let rec factorize n p acc =
+        match n with
+        | 1 -> acc
+        | _ when n % p = 0 -> factorize (n/p) p (p::acc)
+        | _ -> factorize n (p + 1) acc
+ 
+    match n with
+    | x when x < 2 -> []
+    | _ -> 
+        let factors = factorize n 2 []
+        reverseList [] factors 
+
+// 17.2. Кортеж из пяти списков
+let fiveLists (list: int list) =
+    let list1 = list |> List.filter (fun x -> x % 2 = 0) |> List.map (fun x -> x / 2)
+    let list2 = list1 |> List.filter (fun x -> x % 3 = 0) |> List.map (fun x -> x / 3)
+    let list3 = list2 |> List.map (fun x -> x * x)
+    let list4 = list3 |> List.filter (fun x -> List.contains x list1)
+    let list5 = (list2 @ list3 @ list4) |> List.distinct
+    (list1, list2, list3, list4, list5)
+
+// 18.2 Копирование последнего элемента из B в A
+let appendLastElement (a: 'a[]) (b: 'a[]) =
+    match b with
+    | [||] -> a
+    | _ -> Array.append a [|b.[b.Length - 1]|]
+
+// 19.2 Упорядоченные строчные символы (по возрастанию)
+let areLettersOrdered str =
+     let lowercaseLetters = 
+         str 
+         |> Seq.filter System.Char.IsLower
+         |> Seq.toList
+     
+     let rec isOrdered list = 
+         match list with
+         | [] | [_] -> true
+         | x::y::rest -> x <= y && isOrdered (y::rest)
+     
+     isOrdered lowercaseLetters
+
+//В порядке увеличения разницы между частотой наиболее часто встречаемого символа в строке и частотой его появления в алфавите
+let sortByMostFreqCharDeviation (input: string) (langFreq: Map<char, float>) =
+    // Частота каждого символа в строке
+    let inputFreq =
+        input
+        |> Seq.filter Char.IsLetter
+        |> Seq.countBy id
+        |> Map.ofSeq
+
+    // Самый частый символ в строке
+    let mostFreqChar =
+        inputFreq
+        |> Map.toSeq
+        |> Seq.maxBy snd
+        |> fst
+
+    // Частота этого символа в языке
+    let langFreqValue =
+        langFreq
+        |> Map.tryFind mostFreqChar
+        |> Option.defaultValue 0.0
+
+    // Частота этого символа в строке (в долях)
+    let totalLetters = input |> Seq.filter Char.IsLetter |> Seq.length |> float
+    let inputFreqValue =
+        inputFreq
+        |> Map.tryFind mostFreqChar
+        |> Option.defaultValue 0
+        |> float
+        |> fun cnt -> cnt / totalLetters
+
+    // Абсолютная разница
+    let deviation = abs (inputFreqValue - langFreqValue)
+
+    // Сортируем символы строки по "похожести" на этот deviation
+    input
+    |> Seq.sortBy (fun c ->
+        let freqC =
+            Map.tryFind c inputFreq
+            |> Option.map (fun cnt -> float cnt / totalLetters)
+            |> Option.defaultValue 0.0
+
+        abs (freqC - langFreqValue))
+    |> String.Concat

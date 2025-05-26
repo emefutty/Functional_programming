@@ -224,9 +224,46 @@ let main argv =
     Console.WriteLine("Metod 1: {0}", countMinInRangeList list 1 5)
     Console.WriteLine("Metod 2: {0}", countMinInRangeChurch list 1 5)*)
 
-    Console.WriteLine("Количество локальных максимумов")
+    (*Console.WriteLine("Количество локальных максимумов")
     let list = [1; 3; 2; 5; 4]
-    Console.WriteLine("List: {0}", countLocalMaxList list)
-    Console.WriteLine("Church: {0}", countLocalMaxChurch list)
+    Console.WriteLine("Metod 1: {0}", countLocalMaxList list)
+    Console.WriteLine("Metod 2: {0}", countLocalMaxChurch list)*)
+
+   (* Console.WriteLine("элементы меньше среднего арифметического массива.")
+    let list = [1; -2; 8; 3; 4; 16; 64]
+    Console.WriteLine("Metod 1: {0}", belowAverageList list)
+    Console.WriteLine("Metod 2: {0}", belowAverageChurch list)*)
+
+    (*Console.WriteLine("Список простых делителей")
+    Console.WriteLine("Metod 1: {0}", primeFactorsList 36)
+    Console.WriteLine("Metod 2: {0}", primeFactorsChurch 36)
+*)
+
+    (*let input = [2; 3; 4; 6; 9; 12; 15; 18]
+
+    let (list1, list2, list3, list4, list5) = fiveLists input
+
+    printfn $"Исходный список: {input}"
+    printfn $"list1 (чётные / 2): {list1}"
+    printfn $"list2 (делятся на 3 / 3): {list2}"
+    printfn $"list3 (квадраты list2): {list3}"
+    printfn $"list4 (элементы из list3, содержащиеся в list1): {list4}"
+    printfn $"list5 (объединение list2 + list3 + list4, без повторений): {list5}"
+*)
+
+    (*let a = [|1; 2; 3|]
+    let b = [|10; 20; 30|]
+
+    let result = appendLastElement a b
+    printfn $"Результат: [|{String.Join("; ", result)}|]"*)
+
+    let langFreq =
+        [ 'e', 0.127; 't', 0.091; 'a', 0.082; 'o', 0.075;
+         'i', 0.070; 'n', 0.067; 's', 0.063; 'h', 0.061;
+         'r', 0.060; 'd', 0.043 ]
+        |> Map.ofList
+
+    let result = sortByMostFreqCharDeviation "this is a test string" langFreq
+    printfn $"Результат: {result}"
 
     0
